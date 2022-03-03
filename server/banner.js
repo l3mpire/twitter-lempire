@@ -4,12 +4,7 @@ import { fabric } from 'fabric';
 
 const latestFollowerUsers = {};
 
-// TODO: eslint
-// TODO: avoir un vrai serveur de deploy et setup ensemble
-// TODO: update only the banner of the userId in parameters
-// TODO: canvas object special qui est remplacé par les followers
-// TODO: un cron qui get les followers et sauve dans la db et si la liste change, appelle une render
-
+// eslint-disable-next-line no-undef
 updateTwitterBanner = (force = false) => {
   const config = Accounts.loginServiceConfiguration.findOne({ service: 'twitter' });
 
@@ -75,7 +70,7 @@ updateTwitterBanner = (force = false) => {
           blocking: false,
           blocked_by: false,
           translator_type: 'none',
-          withheld_in_countries: []
+          withheld_in_countries: [],
         },
         {
           id: 935113614113103900,
@@ -124,7 +119,7 @@ updateTwitterBanner = (force = false) => {
           blocking: false,
           blocked_by: false,
           translator_type: 'none',
-          withheld_in_countries: []
+          withheld_in_countries: [],
         },
         {
           id: 1486637371462348800,
@@ -172,7 +167,7 @@ updateTwitterBanner = (force = false) => {
           blocking: false,
           blocked_by: false,
           translator_type: 'none',
-          withheld_in_countries: []
+          withheld_in_countries: [],
         },
         {
           id: 865081363,
@@ -221,7 +216,7 @@ updateTwitterBanner = (force = false) => {
           blocking: false,
           blocked_by: false,
           translator_type: 'none',
-          withheld_in_countries: []
+          withheld_in_countries: [],
         },
         {
           id: 2602263572,
@@ -271,14 +266,14 @@ updateTwitterBanner = (force = false) => {
           blocking: false,
           blocked_by: false,
           translator_type: 'none',
-          withheld_in_countries: []
-        }
+          withheld_in_countries: [],
+        },
       ],
       next_cursor: 1723425115996095000,
       next_cursor_str: '1723425115996095039',
       previous_cursor: 0,
       previous_cursor_str: '0',
-      total_count: null
+      total_count: null,
     };
 
     const followerUser = res.users;
@@ -293,10 +288,10 @@ updateTwitterBanner = (force = false) => {
     const canvas = new fabric.StaticCanvas();
     canvas.setWidth(1500);
     canvas.setHeight(500);
-  
+
     const loadFromJSON = (c, cb) => { canvas.loadFromJSON(c, () => { cb(undefined, true); }); };
     const loadFromJSONSync = Meteor.wrapAsync(loadFromJSON);
-  
+
     loadFromJSONSync(user.profile.canvas);
 
     const fabricImageFromURL = (url, cb) => { fabric.Image.fromURL(url, image => { cb(undefined, image); }); };
@@ -314,16 +309,16 @@ updateTwitterBanner = (force = false) => {
       });
 
       canvas.add(image);
-    };
+    }
 
     // console.log(canvas.toObject());
 
     const dataUrl = canvas.toDataURL({ format: 'jpeg', quality: 0.99 });
     const banner = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
-  
+
     canvas.clear();
     canvas.dispose();
-  
+
     fs.writeFileSync('/tmp/banner.jpg', banner, 'base64');
 
     Promise.await(client.post('account/update_profile_banner', { banner }));
