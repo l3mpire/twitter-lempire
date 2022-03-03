@@ -4,7 +4,6 @@ import { fabric } from 'fabric';
 
 const latestFollowerUsers = {};
 
-// TODO: faire un repo github
 // TODO: eslint
 // TODO: avoir un vrai serveur de deploy et setup ensemble
 // TODO: update only the banner of the userId in parameters
