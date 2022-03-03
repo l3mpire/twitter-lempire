@@ -1,0 +1,56 @@
+<head>
+  <title>twitter-lempire</title>
+</head>
+
+<body>
+  <h1>Welcome
+    {{#if currentUser}}
+      {{currentUser.profile.name}}
+    {{else}}
+      stranger
+    {{/if}}
+  </h1>
+
+  {{> loginButtons}}
+
+  {{> settings}}
+
+  {{> fabric}}
+
+  <hr>
+
+  {{> users}}
+</body>
+
+
+<template name="settings">
+  {{#if currentUser}}
+    <h2>My settings</h2>
+    {{#if currentUser.profile.disable}}
+      <button class="js-enable">Enable update</button>
+    {{else}}
+      <button class="js-disable">Disable update</button>
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name="fabric">
+  <button class="js-send">Send</button>
+  <button class="js-text-add">Add text</button>
+  <button class="js-image-add">Add image</button>
+  <input type="color" class="js-background-color-set" value="#ffffff">
+
+  <canvas id="canvas" width="1500" height="500"></canvas>
+</template>
+
+<template name="users">
+  <p>Here is the list of the {{userCount}} people that are using this incredible app:</p>
+  {{#each users}}
+    <img src="{{services.twitter.profile_image_url_https}}">
+    {{profile.name}}
+    (<a href="https://twitter.com/{{services.twitter.screenName}}" target="_blank">{{services.twitter.screenName}}</a>)
+    {{#unless profile.disable}}✅{{/unless}}
+    <br>
+  {{/each}}
+  <hr>
+</template>

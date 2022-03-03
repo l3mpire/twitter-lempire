@@ -1,0 +1,9 @@
+body {
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+canvas {
+  border: 1px solid black;
+  margin: 10px 0;
+}
