@@ -45,8 +45,10 @@ module.exports = {
   },
   globals: {
     _: 'readonly',
+    updateTwitterFollowers: 'writable',
     updateTwitterBanner: 'writable',
     updateTwitterName: 'writable',
     moment: 'writable',
+    canvas: 'writable',
   },
 };
