@@ -13,7 +13,7 @@ Template.users.onCreated(function helloOnCreated() {
   this.autorun(c => {
     console.log('load');
     const user = Meteor.user();
-    if (!user?.profile?.canvas) return;
+    if (!user || !user.profile || !user.profile.canvas) return;
 
     canvas.loadFromJSON(user.profile.canvas);
     c.stop();
@@ -38,8 +38,8 @@ Template.settings.events({
 // fabric
 
 Template.fabric.events({
-  'click .js-send'() {
-    Meteor.call('send');
+  'click .js-save'() {
+    Meteor.call('save');
   },
   'click .js-text-add'() {
     const text = new fabric.Textbox('Double click to change this text', { left: 10, top: 10, width: 600, fontSize: 20 });

@@ -1,4 +1,4 @@
-// import cron from 'node-cron';
+import cron from 'node-cron';
 
 Meteor.publish('users', () => Meteor.users.find({}, { fields: {
   'services.twitter.screenName': 1,
@@ -7,13 +7,7 @@ Meteor.publish('users', () => Meteor.users.find({}, { fields: {
 } }));
 
 Meteor.methods({
-  forceUpdate() {
-    updateTwitterBanner(true);
-    // updateTwitterName();
-  },
-  send() {
-    updateTwitterBanner(true);
-  },
+  save() { updateTwitterBanner(this.userId); },
 });
 
 Meteor.startup(() => {
@@ -22,6 +16,10 @@ Meteor.startup(() => {
   // // every 10mn, update name of users
   // cron.schedule('*/10 * * * *', Meteor.bindEnvironment(updateTwitterName));
 
-  // // every 1mn, update banner
-  // cron.schedule('* * * * *', Meteor.bindEnvironment(updateTwitterBanner));
+  // every 1mn, update banner
+  cron.schedule('* * * * *', Meteor.bindEnvironment(() => {
+    Meteor.users.find({ 'profile.disable': { $exists: false } }).forEach(user => {
+      updateTwitterFollowers(user._id);
+    });
+  }));
 });
