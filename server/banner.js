@@ -22,9 +22,10 @@ updateTwitterFollowers = userId => {
   if (!res || !res.users || !res.users.length) return;
 
   const followers = res.users;
-  Meteor.users.update(userId, { $set: { followers } });
 
-  if (_.difference(_.pluck(user.followers || [], 'id'), _.pluck(followers, 'id')).length === 0) return;
+  if (_.difference(_.pluck(user.followers || [], 'profile_image_url_https'), _.pluck(followers, 'profile_image_url_https')).length === 0) return;
+
+  Meteor.users.update(userId, { $set: { followers } });
 
   updateTwitterBanner(userId);
 };
@@ -60,16 +61,18 @@ updateTwitterBanner = userId => {
 
   const object = user.profile.canvas.objects.find(o => o.type === 'rect');
 
-  for (let i = 0; i < followers.length; i++) {
-    const image = fabricImageFromURLSync(followers[i].profile_image_url_https);
+  if (followers) {
+    for (let i = 0; i < followers.length; i++) {
+      const image = fabricImageFromURLSync(followers[i].profile_image_url_https);
 
-    image.set({
-      left: object.left + i * ((object.width * object.scaleX - 48) / (followers.length - 1)),
-      top: object.top,
-      clipPath: new fabric.Circle({ radius: 24, originX: 'center', originY: 'center' }),
-    });
+      image.set({
+        left: object.left + i * ((object.width * object.scaleX - 48) / (followers.length - 1)),
+        top: object.top,
+        clipPath: new fabric.Circle({ radius: 24, originX: 'center', originY: 'center' }),
+      });
 
-    canvas.add(image);
+      canvas.add(image);
+    }
   }
 
   // console.log(canvas.toObject());

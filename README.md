@@ -4,6 +4,7 @@ https://twitter.lempire.com/
 
 # Todo
 
-- [ ] update only the banner of the userId in parameters
-- [ ] canvas object special qui est remplacé par les followers
-- [ ] un cron qui get les followers et sauve dans la db et si la liste change, appelle une render
+- [ ] see why francois followers are not saved on his user document
+- [ ] canvas object special (image?) qui est remplacé par les followers
+- [ ] default banner for new users
+- [ ] add an autosave with debounce that call updateTwitterBanner
