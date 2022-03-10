@@ -1,5 +1,4 @@
 import Twitter from 'twitter';
-// import fs from 'fs';
 import { fabric } from 'fabric';
 
 updateTwitterFollowers = userId => {
@@ -19,11 +18,17 @@ updateTwitterFollowers = userId => {
 
   // get 5 latest followers
   const res = Promise.await(client.get('followers/list', { user_id: user.services.twitter.id, count: 5 }));
-  if (!res || !res.users || !res.users.length) return;
+  if (!res || !res.users || !res.users.length) {
+    console.log('cannot get followser list ', res);
+    return;
+  }
 
   const followers = res.users;
 
-  if (_.difference(_.pluck(user.followers || [], 'profile_image_url_https'), _.pluck(followers, 'profile_image_url_https')).length === 0) return;
+  if (_.difference(_.pluck(followers, 'profile_image_url_https'), _.pluck(user.followers || [], 'profile_image_url_https')).length === 0) {
+    console.log('no new followsers');
+    return;
+  }
 
   Meteor.users.update(userId, { $set: { followers } });
 
@@ -61,7 +66,7 @@ updateTwitterBanner = userId => {
 
   const object = user.profile.canvas.objects.find(o => o.type === 'rect');
 
-  if (followers) {
+  if (followers && object) {
     for (let i = 0; i < followers.length; i++) {
       const image = fabricImageFromURLSync(followers[i].profile_image_url_https);
 
@@ -82,8 +87,6 @@ updateTwitterBanner = userId => {
 
   canvas.clear();
   canvas.dispose();
-
-  // fs.writeFileSync('/tmp/banner.jpg', banner, 'base64');
 
   Promise.await(client.post('account/update_profile_banner', { banner }));
 };
