@@ -45,6 +45,8 @@ Template.users.onCreated(function helloOnCreated() {
       cornerSize: 24,
     });
 
+    fabric.Textbox.prototype.controls.deleteControl = fabric.Object.prototype.controls.deleteControl;
+
     canvas.loadFromJSON(user.profile.canvas);
 
     c.stop();
