@@ -75,7 +75,13 @@ Template.fabric.events({
     Meteor.call('save');
   },
   'click .js-text-add'() {
-    const text = new fabric.Textbox('Double click to change this text', { left: 10, top: 10, width: 600, fontSize: 20 });
+    const text = new fabric.Textbox('Double click to change this text', {
+      left: 10,
+      top: 10,
+      width: 600,
+      fontSize: 20,
+      fontFamily: 'Arial',
+    });
     canvas.add(text);
     canvas.setActiveObject(text);
     saveCanvas();
