@@ -70,6 +70,11 @@ Template.settings.events({
 
 // fabric
 
+Template.fabric.helpers({
+  color0() { return Meteor.user().profile.canvas.objects[0].fill.colorStops[0].color; },
+  color1() { return Meteor.user().profile.canvas.objects[0].fill.colorStops[1].color; },
+});
+
 Template.fabric.events({
   'click .js-save'() {
     Meteor.call('save');
@@ -80,6 +85,9 @@ Template.fabric.events({
       top: 10,
       width: 600,
       fontSize: 20,
+      scaleX: 1.5,
+      scaleY: 1.5,
+      fill: 'white',
       fontFamily: 'Arial',
     });
     canvas.add(text);
@@ -102,9 +110,20 @@ Template.fabric.events({
     canvas.setActiveObject(rect);
     saveCanvas();
   },
-  'change .js-background-color-set'(event) {
-    canvas.backgroundColor = event.currentTarget.value;
+  'input .js-background-color0-set'(event) {
+    const back = canvas.getObjects()[0];
+    back.fill.colorStops[0].color = event.currentTarget.value;
+    back.set({ fill: new fabric.Gradient(back.fill) });
     canvas.renderAll();
+    canvas.requestRenderAll();
+    saveCanvas();
+  },
+  'input .js-background-color1-set'(event) {
+    const back = canvas.getObjects()[0];
+    back.fill.colorStops[1].color = event.currentTarget.value;
+    back.set({ fill: new fabric.Gradient(back.fill) });
+    canvas.renderAll();
+    canvas.requestRenderAll();
     saveCanvas();
   },
 });

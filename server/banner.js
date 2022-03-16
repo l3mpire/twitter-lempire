@@ -26,7 +26,7 @@ updateTwitterFollowers = userId => {
   const followers = res.users;
 
   if (_.difference(_.pluck(followers, 'profile_image_url_https'), _.pluck(user.followers || [], 'profile_image_url_https')).length === 0) {
-    console.log('no new followsers');
+    console.log('no new followers');
     return;
   }
 
@@ -64,7 +64,7 @@ updateTwitterBanner = userId => {
   const fabricImageFromURL = (url, cb) => { fabric.Image.fromURL(url, image => { cb(undefined, image); }); };
   const fabricImageFromURLSync = Meteor.wrapAsync(fabricImageFromURL);
 
-  const object = canvas._objects.find(o => o.type === 'rect');
+  const object = canvas._objects.find(o => o.fill === 'red');
 
   if (followers && object) {
     object.fill = 'transparent';
