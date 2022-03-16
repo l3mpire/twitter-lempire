@@ -64,15 +64,17 @@ updateTwitterBanner = userId => {
   const fabricImageFromURL = (url, cb) => { fabric.Image.fromURL(url, image => { cb(undefined, image); }); };
   const fabricImageFromURLSync = Meteor.wrapAsync(fabricImageFromURL);
 
-  const object = user.profile.canvas.objects.find(o => o.type === 'rect');
+  const object = canvas._objects.find(o => o.type === 'rect');
 
   if (followers && object) {
+    object.fill = 'transparent';
     for (let i = 0; i < followers.length; i++) {
       const image = fabricImageFromURLSync(followers[i].profile_image_url_https);
-
       image.set({
         left: object.left + i * ((object.width * object.scaleX - 48) / (followers.length - 1)),
         top: object.top,
+        scaleX: object.scaleX,
+        scaleY: object.scaleY,
         clipPath: new fabric.Circle({ radius: 24, originX: 'center', originY: 'center' }),
       });
 
