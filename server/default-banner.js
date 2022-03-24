@@ -3,7 +3,6 @@ defaultBanner = {
   objects: [
     {
       selectable: false,
-      evented: false,
       type: 'rect',
       version: '4.6.0',
       originX: 'left',

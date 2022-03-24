@@ -14,9 +14,9 @@ https://twitter.lempire.com/
 - [x] locked background
 - [x] display colors
 - [x] default jolie banner for new users
-- [ ] petit site quand on est pas co
-- [ ] design la page quand on est co
-- [ ] show your love! https://blackmagic.so/real-time-banner/?ref=producthunt
+- [x] petit site quand on est pas co
+- [x] design la page quand on est co
 
+- [ ] show your love! https://blackmagic.so/real-time-banner/?ref=producthunt
 - [ ] auto download de la banniere existant quand on nouveau user sign in
 - [ ] add an autosave with debounce that call updateTwitterBanner

@@ -1,55 +1,62 @@
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/pico.min.css">
   <title>twitter-lempire</title>
 </head>
 
 <body>
-  <h1>Welcome
+  <main class="container">
+    {{> loginButtons}}
+
     {{#if currentUser}}
-      {{currentUser.profile.name}}
+      {{> settings}}
+      {{> fabric}}
     {{else}}
-      stranger
+      {{> users}}
     {{/if}}
-  </h1>
-
-  {{> loginButtons}}
-
-  {{> settings}}
-
-  {{> fabric}}
-
-  <hr>
-
-  {{> users}}
+  </main>
 </body>
 
-
 <template name="settings">
-  {{#if currentUser}}
-    <h2>My settings</h2>
-    {{#if currentUser.profile.disable}}
-      <button class="js-enable">Enable update</button>
-    {{else}}
-      <button class="js-disable">Disable update</button>
-    {{/if}}
+  <h2>My settings</h2>
+  {{#if currentUser.profile.disable}}
+    <a href="#" role="button" class="js-enable">Enable update</a>
+  {{else}}
+    <a href="#" role="button" class="js-disable">Disable update</a>
   {{/if}}
 </template>
 
 <template name="fabric">
-  <button class="js-save">Save</button>
-  <button class="js-text-add">Add text</button>
-  <button class="js-image-add">Add image</button>
-  <button class="js-followers-add">Add followers</button>
-  Background gradient colors:
-  <input type="color" class="js-background-color0-set" value="{{color0}}">
-  <input type="color" class="js-background-color1-set" value="{{color1}}">
+  <a href="#" role="button" class="outline js-save">Save</a>
+  <a href="#" role="button" class="outline js-text-add">Add text</a>
+  <a href="#" role="button" class="outline js-image-add">Add image</a>
+  <a href="#" role="button" class="outline js-followers-add">Add followers</a>
+
+  <br><br>
+
+  <div class="grid">
+    Background gradient colors:
+    <input type="color" class="js-background-color0-set" value="{{color0}}">
+    <input type="color" class="js-background-color1-set" value="{{color1}}">
+  </div>
 
   <canvas id="canvas" width="1500" height="500"></canvas>
 </template>
 
 <template name="users">
+  <h1>Real-time Twitter Banner</h1>
+
+  <img src="example.jpeg">
+
+  <br>
+  <br>
+
+  <p>Beautiful Twitter banners that update in real-time with your latest followers! See a live demo: <a href="https://twitter.com/acemtp" target="_blank">@acemtp</a></p>
+
   <p>Here is the list of the {{userCount}} people that are using this incredible app:</p>
   {{#each users}}
-    <img src="{{services.twitter.profile_image_url_https}}">
+    <img style="border-radius: 3px;" src="{{services.twitter.profile_image_url_https}}">
     {{profile.name}}
     (<a href="https://twitter.com/{{services.twitter.screenName}}" target="_blank">{{services.twitter.screenName}}</a>)
     {{#unless profile.disable}}✅{{/unless}}
