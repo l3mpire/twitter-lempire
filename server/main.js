@@ -1,5 +1,12 @@
 import cron from 'node-cron';
 
+Accounts.onCreateUser((options, user) => {
+  user.profile = options.profile;
+  user.profile.canvas = defaultBanner;
+  user.profile.canvas.objects[user.profile.canvas.objects.length - 1].text = `Hi, I'm ${user.profile.name}!`;
+  return user;
+});
+
 Meteor.publish('users', () => Meteor.users.find({}, { fields: {
   'services.twitter.screenName': 1,
   'services.twitter.profile_image_url_https': 1,

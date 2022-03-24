@@ -50,5 +50,6 @@ module.exports = {
     updateTwitterName: 'writable',
     moment: 'writable',
     canvas: 'writable',
+    defaultBanner: 'writable',
   },
 };
